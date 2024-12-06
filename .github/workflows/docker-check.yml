@@ -1,0 +1,23 @@
+name: Docker Container Check
+
+on: [push]
+
+jobs:
+  check-container:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker image
+      run: docker build -t my-app .
+
+    - name: Run Docker container
+      run: docker run -d --name my-app-container my-app
+
+    - name: Check Docker container status
+      run: docker ps -a
